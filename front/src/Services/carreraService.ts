@@ -19,3 +19,22 @@ export const getCarreraById = async (id: number) => {
     }
     return data;
 }
+
+
+export const getOrCreateCarrera = async () => {
+    const nombreCarrera= "Tecnicatura en Programacion";
+
+    const {data: existing, error: getError} = await supabase.from('carrera').select('*').eq('nombre', nombreCarrera).single();
+
+    if (existing) return existing;
+
+    const { data: nuevaCarrera, error } = await supabase
+      .from("carreras")
+      .insert({ nombre: nombreCarrera })
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    return nuevaCarrera;
+}
