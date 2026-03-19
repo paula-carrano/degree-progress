@@ -20,21 +20,32 @@ export const getCarreraById = async (id: number) => {
     return data;
 }
 
-
 export const getOrCreateCarrera = async () => {
-    const nombreCarrera= "Tecnicatura en Programacion";
+  const nombreCarrera = "Tecnicatura en programacion";
 
-    const {data: existing, error: getError} = await supabase.from('carrera').select('*').eq('nombre', nombreCarrera).single();
+  const normalize = (str: string) =>
+    str.trim().toLowerCase();
 
-    if (existing) return existing;
+  const { data: carreras, error } = await supabase
+    .from("carreras")
+    .select("*");
 
-    const { data: nuevaCarrera, error } = await supabase
+  if (error) throw error;
+
+  const existing = carreras.find(
+    (c) => normalize(c.nombre) === normalize(nombreCarrera)
+  );
+
+  if (existing) return existing;
+
+  const { data: nuevaCarrera, error: insertError } =
+    await supabase
       .from("carreras")
       .insert({ nombre: nombreCarrera })
       .select()
       .single();
-    
-    if (error) throw error;
-    
-    return nuevaCarrera;
-}
+
+  if (insertError) throw insertError;
+
+  return nuevaCarrera;
+};
