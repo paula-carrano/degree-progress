@@ -2,7 +2,10 @@ import { supabase } from "./supabaseClient";
 
 
 export const getMaterias = async () => {
-    const {data, error} = await supabase.from('materia').select('*');
+    const {data, error} = await supabase.from('materias').select( `id,
+      nombre,
+      creditos,
+      modulos ( nombre )`);
 
     if (error) {
         throw new Error(error.message);
@@ -12,7 +15,7 @@ export const getMaterias = async () => {
 }
 
 export const getMateriaByCarrera = async (carreraId: number) => {
-    const {data, error} = await supabase.from('materia').select('*').eq('carrera_id', carreraId);
+    const {data, error} = await supabase.from('materias').select('*').eq('carrera_id', carreraId);
 
     if (error) {
         throw new Error(error.message);

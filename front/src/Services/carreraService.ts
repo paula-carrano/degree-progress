@@ -1,7 +1,7 @@
 import { supabase } from "./supabaseClient";
 
 export const getCarreras = async () => {
-    const {data, error} = await supabase.from('carrera').select('*');
+    const {data, error} = await supabase.from('carreras').select('*');
 
     if (error) {
         throw new Error(error.message);
@@ -12,7 +12,7 @@ export const getCarreras = async () => {
 
 
 export const getCarreraById = async (id: number) => {
-    const {data, error} = await supabase.from('carrera').select('*').eq('id', id).single();
+    const {data, error} = await supabase.from('carreras').select('*').eq('id', id).single();
 
     if (error) {
         throw new Error(error.message);
