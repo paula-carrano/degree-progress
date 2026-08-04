@@ -4,6 +4,7 @@ import { supabase } from "./supabaseClient";
 export const getMaterias = async () => {
     const {data, error} = await supabase.from('materias').select( `id,
       nombre,
+      codigo,
       creditos,
       modulos ( nombre )`);
 
