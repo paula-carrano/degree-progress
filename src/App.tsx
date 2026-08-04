@@ -7,19 +7,24 @@ import {
   Home,
   ImportExcel,
   Materias,
+  Login,
 } from "./Pages/index";
+import { ProtectedRoute } from "./Components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="materias" element={<Materias />} />
-          <Route path="correlativas" element={<Correlativas />} />
-          <Route path="historial" element={<Historial />} />
-          <Route path="import-excel" element={<ImportExcel />} />
+        <Route path="login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="materias" element={<Materias />} />
+            <Route path="correlativas" element={<Correlativas />} />
+            <Route path="historial" element={<Historial />} />
+            <Route path="import-excel" element={<ImportExcel />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

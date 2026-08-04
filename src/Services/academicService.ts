@@ -40,11 +40,17 @@ const normalizeStatus = (progress?: ProgressRow): AcademicStatus => {
 const normalizeModule = (value: string) => value.trim().toLocaleLowerCase("es");
 
 export const getAcademicData = async (): Promise<AcademicData> => {
+  const { data: authData, error: authError } = await supabase.auth.getUser();
+  if (authError || !authData.user) throw new Error("No hay una sesión activa");
+
   const [materiasResult, progresoResult, correlativasResult] = await Promise.all([
     supabase
       .from("materias")
       .select("id, nombre, codigo, creditos, modulos(nombre)"),
-    supabase.from("progreso_materia").select("*"),
+    supabase
+      .from("progreso_materia")
+      .select("*")
+      .eq("user_id", authData.user.id),
     supabase.from("correlativas").select("materia_id, requisito_id"),
   ]);
 
@@ -93,22 +99,18 @@ export const setSubjectStatus = async (
   materiaId: number,
   estado: AcademicStatus,
 ) => {
-  const { data: existing, error: findError } = await supabase
-    .from("progreso_materia")
-    .select("id")
-    .eq("materia_id", materiaId)
-    .maybeSingle();
-
-  if (findError) throw findError;
+  const { data: authData, error: authError } = await supabase.auth.getUser();
+  if (authError || !authData.user) throw new Error("No hay una sesión activa");
 
   const values = {
     materia_id: materiaId,
+    user_id: authData.user.id,
     estado,
   };
 
-  const result = existing
-    ? await supabase.from("progreso_materia").update(values).eq("id", existing.id)
-    : await supabase.from("progreso_materia").insert(values);
+  const result = await supabase
+    .from("progreso_materia")
+    .upsert(values, { onConflict: "user_id,materia_id" });
 
   if (result.error) throw result.error;
 };

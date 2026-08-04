@@ -7,8 +7,10 @@ import {
   TreeStructure,
   UploadSimple,
   X,
+  SignOut,
 } from "@phosphor-icons/react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../Contexts/AuthContext";
 
 type SidebarProps = {
   open: boolean;
@@ -24,8 +26,10 @@ const links = [
   { to: "/import-excel", label: "Importar plan", icon: UploadSimple },
 ];
 
-export const Sidebar = ({ open, onClose }: SidebarProps) => (
-  <>
+export const Sidebar = ({ open, onClose }: SidebarProps) => {
+  const { user, signOut } = useAuth();
+
+  return <>
     {open && (
       <button
         type="button"
@@ -82,6 +86,18 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => (
           Cada materia aprobada te acerca un poco más a tu objetivo.
         </p>
       </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-slate-200 p-2">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-slate-100 text-sm font-bold text-slate-600">
+          {user?.email?.charAt(0).toUpperCase() ?? "U"}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-xs font-semibold text-slate-700">{user?.email}</p>
+          <p className="text-[11px] text-slate-400">Mi progreso</p>
+        </div>
+        <button type="button" onClick={() => void signOut()} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600" aria-label="Cerrar sesión">
+          <SignOut size={18} />
+        </button>
+      </div>
     </aside>
   </>
-);
+};
