@@ -13,7 +13,7 @@ import { ProtectedRoute } from "./Components/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="login" element={<Login />} />
         <Route element={<ProtectedRoute />}>
