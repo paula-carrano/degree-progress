@@ -5,6 +5,8 @@ import type {
   Correlative,
   Subject,
 } from "../Types/academic";
+import { MODULE_ORDER } from "../Constants/academic";
+import { normalizeText } from "../Utils/text";
 
 type ModuleRelation = { nombre: string } | { nombre: string }[] | null;
 
@@ -18,14 +20,6 @@ type ProgressRow = {
   cuatrimestre?: number | null;
 };
 
-const moduleOrder = [
-  "ciclo introductorio",
-  "cursos obligatorios",
-  "cursos avanzados obligatorios",
-  "otros requisitos",
-  "cursos complementarios",
-];
-
 const moduleName = (relation: ModuleRelation) => {
   if (Array.isArray(relation)) return relation[0]?.nombre ?? "Sin módulo";
   return relation?.nombre ?? "Sin módulo";
@@ -36,8 +30,6 @@ const normalizeStatus = (progress?: ProgressRow): AcademicStatus => {
   if (progress?.estado === "cursando") return "cursando";
   return "pendiente";
 };
-
-const normalizeModule = (value: string) => value.trim().toLocaleLowerCase("es");
 
 export const getAcademicData = async (): Promise<AcademicData> => {
   const { data: authData, error: authError } = await supabase.auth.getUser();
@@ -79,10 +71,10 @@ export const getAcademicData = async (): Promise<AcademicData> => {
       };
     })
     .sort((a, b) => {
-      const aIndex = moduleOrder.indexOf(normalizeModule(a.modulo));
-      const bIndex = moduleOrder.indexOf(normalizeModule(b.modulo));
-      const aOrder = aIndex < 0 ? moduleOrder.length : aIndex;
-      const bOrder = bIndex < 0 ? moduleOrder.length : bIndex;
+      const aIndex = MODULE_ORDER.indexOf(normalizeText(a.modulo));
+      const bIndex = MODULE_ORDER.indexOf(normalizeText(b.modulo));
+      const aOrder = aIndex < 0 ? MODULE_ORDER.length : aIndex;
+      const bOrder = bIndex < 0 ? MODULE_ORDER.length : bIndex;
       return (
         aOrder - bOrder ||
         a.codigo.localeCompare(b.codigo, "es", { numeric: true })

@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const titles: Record<string, string> = {
   "/": "Inicio",
-  "/dashboard": "Dashboard",
   "/materias": "Materias",
   "/correlativas": "Correlativas",
   "/historial": "Historial académico",

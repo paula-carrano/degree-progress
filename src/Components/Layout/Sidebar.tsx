@@ -1,6 +1,5 @@
 import {
   Books,
-  ChartDonut,
   ClockCounterClockwise,
   GraduationCap,
   House,
@@ -10,7 +9,7 @@ import {
   SignOut,
 } from "@phosphor-icons/react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../Contexts/AuthContext";
+import { useAuth } from "../../Hooks/useAuth";
 
 type SidebarProps = {
   open: boolean;
@@ -19,7 +18,6 @@ type SidebarProps = {
 
 const links = [
   { to: "/", label: "Inicio", icon: House, end: true },
-  { to: "/dashboard", label: "Dashboard", icon: ChartDonut },
   { to: "/materias", label: "Materias", icon: Books },
   { to: "/correlativas", label: "Correlativas", icon: TreeStructure },
   { to: "/historial", label: "Historial", icon: ClockCounterClockwise },
