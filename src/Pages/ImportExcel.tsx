@@ -156,18 +156,38 @@ export const ImportExcel = () => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Importar plan de estudios</h2>
+    <div className="mx-auto max-w-2xl space-y-5">
+      <div>
+        <h2 className="text-2xl font-bold">Importar plan de estudios</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Cargá las materias, módulos y correlativas desde tu archivo de Excel.
+        </p>
+      </div>
 
-      <input
-        type="file"
-        accept=".xlsx, .xls"
-        onChange={handleFileUpload}
-        className="mb-4"
-      />
+      <label className="flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-violet-200 bg-white p-8 text-center shadow-sm transition hover:border-violet-400 hover:bg-violet-50/40">
+        <span className="grid h-16 w-16 place-items-center rounded-2xl bg-violet-100 text-3xl text-violet-700">
+          ↑
+        </span>
+        <span className="mt-5 font-bold text-slate-900">
+          {loading ? "Importando el plan..." : "Seleccioná un archivo .xlsx"}
+        </span>
+        <span className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+          Debe incluir las columnas Código, Materia, Créditos, Módulo y Correlativas.
+        </span>
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={handleFileUpload}
+          disabled={loading}
+          className="sr-only"
+        />
+      </label>
 
-      {loading && <p>Cargando...</p>}
-      {message && <p>{message}</p>}
+      {message && (
+        <p className={`rounded-xl border p-4 text-sm ${message.startsWith("Error") ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>
+          {message}
+        </p>
+      )}
     </div>
   );
 };

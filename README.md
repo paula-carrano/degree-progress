@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Degree Progress
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Degree Progress es una aplicación pensada para acompañar a estudiantes durante su carrera y ayudarles a entender de forma sencilla cuánto avanzaron y qué materias pueden cursar.
 
-Currently, two official plugins are available:
+## ¿Qué se puede hacer?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Consultar las materias del plan de estudios.
+- Ver las materias organizadas por módulo.
+- Registrar materias aprobadas y su calificación.
+- Llevar un seguimiento del avance en la carrera.
+- Importar un plan de estudios desde un archivo de Excel.
+- Consultar las correlativas de cada materia.
+- Conversar con un asistente académico sobre el plan de estudios.
 
-## React Compiler
+## Asistente académico
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+La aplicación cuenta con un chat que responde preguntas utilizando la información real del plan de estudios.
 
-## Expanding the ESLint configuration
+Algunas consultas posibles son:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ¿Cuáles son las correlativas de Matemática I?
+- ¿Qué materias no tienen correlativas?
+- ¿Qué puedo cursar después de aprobar Programación I?
+- ¿Cuántos créditos tiene una materia?
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+El objetivo es que el estudiante pueda encontrar esta información sin tener que revisar manualmente todo el plan de estudios.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Importación del plan
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Las materias pueden cargarse desde un archivo de Excel. El archivo incluye datos como:
+
+- Código de la materia.
+- Nombre.
+- Créditos.
+- Módulo al que pertenece.
+- Códigos de sus correlativas.
+
+Esto permite actualizar el plan completo de una manera rápida y mantener correctamente las relaciones entre las materias.
+
+## Objetivo del proyecto
+
+Degree Progress busca reunir en un solo lugar la información más importante de una carrera. La idea es ofrecer una vista clara del recorrido académico y facilitar la toma de decisiones al momento de elegir qué cursar.
+
+El proyecto se encuentra en desarrollo, por lo que se seguirán incorporando mejoras y nuevas formas de visualizar el progreso.
+
+## Cómo iniciar la aplicación
+
+Con el proyecto descargado y preparado, se puede iniciar con:
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Luego se abre desde la dirección que aparece en la terminal, normalmente `http://localhost:5173`.
