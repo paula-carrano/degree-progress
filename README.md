@@ -2,6 +2,12 @@
 
 Degree Progress es una aplicación pensada para acompañar a estudiantes durante su carrera y ayudarles a entender de forma sencilla cuánto avanzaron y qué materias pueden cursar.
 
+## Demo
+
+Podés probar la aplicación en:
+
+**[Abrir Degree Progress](https://paula-carrano.github.io/degree-progress/)**
+
 ## ¿Qué se puede hacer?
 
 - Consultar las materias del plan de estudios.
